@@ -1,5 +1,6 @@
-name: Daily Scout Collect
+name: Japan Daily Scout Collect
 
+# 일본 롱폼·쇼츠 인기순위만 수집. 다국가 원본 수집 중지.
 on:
   schedule:
     - cron: '0 0 * * *'
@@ -20,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run collector
+      - name: Run Japan collector
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}

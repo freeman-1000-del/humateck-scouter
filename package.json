@@ -1,8 +1,9 @@
 {
-  "name": "humateck-scouter",
-  "version": "1.0.0",
+  "name": "youtube-trend-markets",
+  "version": "2.1.0",
   "type": "module",
   "private": true,
+  "description": "국가별 유튜브트랜드 수집 (기본 MARKET=jp)",
   "scripts": {
     "fetch": "node fetch.mjs"
   },

@@ -1,29 +1,15 @@
-name: Weekly CC Collect
+name: Weekly CC Collect (DISABLED)
 
+# YouTube API 절약을 위해 CC 자동 수집 중지.
+# 필요 시에만 workflow_dispatch로 수동 실행.
 on:
-  schedule:
-    # 매주 월요일 UTC 01:00 (한국 월요일 오전 10시)에 실행
-    - cron: '0 1 * * 1'
-  workflow_dispatch:   # 수동 실행 버튼
+  workflow_dispatch:
 
 jobs:
   collect-cc:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run CC collector
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-        run: node fetch-cc.mjs
+      - name: Skip — CC collect disabled
+        run: |
+          echo "CC collect is disabled. Use Japan long/shorts collector (fetch.mjs) instead."
+          exit 0

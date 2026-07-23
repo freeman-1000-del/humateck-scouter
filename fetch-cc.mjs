@@ -12,6 +12,10 @@ if (!YT_KEY || !SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
   process.exit(1);
 }
 
+// API 절약: CC 수집 중지. 일본 롱폼/쇼츠는 fetch.mjs 사용.
+console.log("[중지] CC 수집은 비활성입니다. node fetch.mjs (일본 롱폼·쇼츠)를 사용하세요.");
+process.exit(0);
+
 const sb = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
 // 카테고리별 검색어 (유튜브 videoCategoryId + 검색 키워드 보조)
@@ -29,7 +33,7 @@ function parseNum(n){ return parseInt(n || "0", 10); }
 async function searchCC(categoryId){
   const url = `https://www.googleapis.com/youtube/v3/search?part=snippet`
     + `&type=video&videoLicense=creativeCommon&videoCategoryId=${categoryId}`
-    + `&order=viewCount&maxResults=50&regionCode=US&relevanceLanguage=en&key=${YT_KEY}`;
+    + `&order=viewCount&maxResults=50&regionCode=JP&relevanceLanguage=ja&key=${YT_KEY}`;
   const res = await fetch(url);
   const data = await res.json();
   if (data.error) throw new Error(`search ${categoryId}: ${data.error.message}`);
