@@ -1,9 +1,7 @@
-name: Global Daily Scout Collect
+name: Japan Daily Scout Collect (personal)
 
-# 16-country mostPopular → kind=popular (English Content Scouter)
+# 일본판 개인용 — 필요 시 workflow_dispatch 로만 실행 (사이트 /jp/)
 on:
-  schedule:
-    - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
@@ -21,9 +19,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run global collector
+      - name: Run Japan collector
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-        run: node fetch-global.mjs
+          MARKET: jp
+        run: node fetch.mjs
