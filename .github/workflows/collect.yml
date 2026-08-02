@@ -1,6 +1,10 @@
 name: Global Daily Scout Collect
 
 # 16-country mostPopular → kind=popular (English Content Scouter)
+# Required secrets (exact names):
+#   YOUTUBE_API_KEY
+#   SUPABASE_URL
+#   SUPABASE_SERVICE_ROLE_KEY
 on:
   schedule:
     - cron: '0 0 * * *'
@@ -25,32 +29,25 @@ jobs:
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           set -e
           yt="${{ secrets.YOUTUBE_API_KEY != '' }}"
           url="${{ secrets.SUPABASE_URL != '' }}"
-          sk="${{ secrets.SUPABASE_SERVICE_KEY != '' }}"
           srk="${{ secrets.SUPABASE_SERVICE_ROLE_KEY != '' }}"
           echo "YOUTUBE_API_KEY set: $yt"
           echo "SUPABASE_URL set: $url"
-          echo "SUPABASE_SERVICE_KEY set: $sk"
           echo "SUPABASE_SERVICE_ROLE_KEY set: $srk"
           if [ -n "$SUPABASE_URL" ]; then
             echo "SUPABASE_URL host: $(node -e "try{const u=new URL(process.env.SUPABASE_URL.trim()); console.log(u.host)}catch(e){console.log('INVALID_URL')}")"
           fi
           if [ "$yt" != "true" ]; then echo "::error::Missing secret YOUTUBE_API_KEY"; exit 1; fi
           if [ "$url" != "true" ]; then echo "::error::Missing secret SUPABASE_URL"; exit 1; fi
-          if [ "$sk" != "true" ] && [ "$srk" != "true" ]; then
-            echo "::error::Missing secret SUPABASE_SERVICE_KEY (or SUPABASE_SERVICE_ROLE_KEY)"
-            exit 1
-          fi
+          if [ "$srk" != "true" ]; then echo "::error::Missing secret SUPABASE_SERVICE_ROLE_KEY"; exit 1; fi
 
       - name: Run global collector
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: node fetch-global.mjs

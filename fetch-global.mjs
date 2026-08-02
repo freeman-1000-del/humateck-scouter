@@ -3,22 +3,22 @@ import { createClient } from '@supabase/supabase-js';
 
 const YT_KEY = process.env.YOUTUBE_API_KEY;
 let SUPABASE_URL = (process.env.SUPABASE_URL || "").trim().replace(/\/+$/, "").replace(/\/rest\/v1$/i, "");
-const SUPABASE_SERVICE_KEY =
-  process.env.SUPABASE_SERVICE_KEY ||
+// 통일 이름: SUPABASE_SERVICE_ROLE_KEY (구 SUPABASE_SERVICE_KEY 도 허용)
+const SUPABASE_SERVICE_ROLE_KEY =
   process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.SUPABASE_SERVICE_KEY ||
   "";
 
-if (!YT_KEY || !SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+if (!YT_KEY || !SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
   console.error("[중단] 환경변수가 비어 있습니다.", {
     YOUTUBE_API_KEY: Boolean(YT_KEY),
     SUPABASE_URL: Boolean(SUPABASE_URL),
-    SUPABASE_SERVICE_KEY: Boolean(process.env.SUPABASE_SERVICE_KEY),
-    SUPABASE_SERVICE_ROLE_KEY: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
+    SUPABASE_SERVICE_ROLE_KEY: Boolean(SUPABASE_SERVICE_ROLE_KEY),
   });
   process.exit(1);
 }
 
-const sb = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+const sb = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 const COUNTRIES = [
   { code: "US", continent: "namerica" }, { code: "CA", continent: "namerica" }, { code: "MX", continent: "namerica" },

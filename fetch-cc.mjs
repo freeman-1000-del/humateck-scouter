@@ -4,10 +4,13 @@
 import { createClient } from '@supabase/supabase-js';
 
 const YT_KEY = process.env.YOUTUBE_API_KEY;
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+const SUPABASE_URL = (process.env.SUPABASE_URL || "").trim().replace(/\/+$/, "").replace(/\/rest\/v1$/i, "");
+const SUPABASE_SERVICE_ROLE_KEY =
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.SUPABASE_SERVICE_KEY ||
+  "";
 
-if (!YT_KEY || !SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+if (!YT_KEY || !SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
   console.error("[중단] 환경변수가 없습니다.");
   process.exit(1);
 }
@@ -16,7 +19,7 @@ if (!YT_KEY || !SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
 console.log("[중지] CC 수집은 비활성입니다. node fetch.mjs (일본 롱폼·쇼츠)를 사용하세요.");
 process.exit(0);
 
-const sb = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+const sb = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 // 카테고리별 검색어 (유튜브 videoCategoryId + 검색 키워드 보조)
 const CATEGORIES = [
