@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Humateck 운영 참고 관리자</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:#050b14;color:#f4f1e8;font-family:Arial,"Noto Sans KR",sans-serif}.wrap{width:1180px;max-width:calc(100vw - 36px);margin:0 auto;padding:26px 0 60px}.header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px}.logo{width:190px;height:auto}.badge{border:1px solid rgba(214,176,78,.6);border-radius:999px;padding:8px 14px;color:#f4d16d}.card{border:1px solid rgba(214,176,78,.58);border-radius:22px;background:linear-gradient(180deg,rgba(20,28,37,.96),rgba(13,19,26,.98));padding:24px;margin-bottom:18px}h1{font-size:32px;color:#4b97ff;margin:0}h2{font-size:22px;color:#ffd95a;margin:0 0 14px}p{line-height:1.7;color:#e8dfcf}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.metric{border:1px solid rgba(214,176,78,.38);border-radius:18px;background:rgba(5,11,20,.56);padding:18px}.metric .label{font-size:14px;color:#cfc8b9}.metric .value{font-size:30px;font-weight:900;color:#fff;margin-top:8px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid rgba(255,255,255,.12);padding:10px 8px;text-align:left;font-size:14px}th{color:#ffd95a}input,button,select{font-family:inherit}input{width:100%;padding:13px;border:1px solid #46566a;border-radius:12px;background:#07101b;color:#fff;font-size:15px}button{padding:12px 18px;border:1px solid #d9b256;border-radius:12px;background:linear-gradient(180deg,#5c4315,#15110a);color:#fff;font-weight:900;cursor:pointer}.row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.notice{border:1px solid rgba(255,217,90,.45);border-radius:16px;background:rgba(255,217,90,.08);padding:16px;color:#f0dfb4}.hidden{display:none}.small{font-size:13px;color:#cfc8b9}@media(max-width:900px){.grid4,.grid2,.row{grid-template-columns:1fr}.header{display:block}.logo{margin-bottom:14px}}
+</style>
+
+<style>
+/* Humateck_New003 clean OAuth guide modal */
+.guideModal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:300;
+  background:rgba(0,0,0,.72);
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+.guideModal:target{display:flex!important}
+.guideModalBox{
+  width:860px!important;
+  max-width:calc(100vw - 48px)!important;
+  max-height:86vh!important;
+  overflow:auto!important;
+  border:1px solid #d4a94f!important;
+  border-radius:22px!important;
+  background:linear-gradient(180deg,#121a23,#0b1119)!important;
+  color:#eee5d5!important;
+  padding:30px 34px!important;
+  box-shadow:0 24px 80px rgba(0,0,0,.72)!important;
+  line-height:1.72!important;
+  word-break:keep-all!important;
+  overflow-wrap:break-word!important;
+  writing-mode:horizontal-tb!important;
+  white-space:normal!important;
+  text-align:left!important;
+}
+.guideModalBox *{
+  writing-mode:horizontal-tb!important;
+  white-space:normal!important;
+  text-align:left!important;
+}
+.guideModalBox h2{
+  color:#ffd95a!important;
+  margin:0 0 8px!important;
+  font-size:28px!important;
+  line-height:1.35!important;
+}
+.guideSubTitle{
+  color:#f4e4b6!important;
+  font-size:16px!important;
+  line-height:1.7!important;
+  margin:0 0 18px!important;
+}
+.guideIntroBox,.guideWarning{
+  border:1px solid rgba(255,217,90,.55);
+  border-radius:16px;
+  background:rgba(255,217,90,.08);
+  padding:16px 18px;
+  margin:16px 0 22px;
+}
+.guideSection{
+  border:1px solid rgba(214,176,78,.34);
+  border-radius:16px;
+  background:rgba(5,11,20,.42);
+  padding:16px 18px;
+  margin:14px 0;
+}
+.guideModalBox h3{
+  color:#ffd95a!important;
+  margin:0 0 8px!important;
+  font-size:19px!important;
+  line-height:1.45!important;
+}
+.guideModalBox p{
+  color:#eee5d5!important;
+  margin:6px 0!important;
+  line-height:1.72!important;
+  font-size:15.5px!important;
+}
+.guidePoint{color:#ffd95a!important;font-weight:900!important}
+.guideCode{
+  display:inline-block;
+  padding:2px 8px;
+  border:1px solid rgba(255,217,90,.45);
+  border-radius:999px;
+  color:#ffd95a;
+  background:rgba(255,217,90,.08);
+  font-weight:900;
+}
+.guideList{margin:8px 0 0;padding-left:19px}
+.guideList li{
+  color:#eee5d5!important;
+  line-height:1.7!important;
+  font-size:15.5px!important;
+  margin:5px 0!important;
+}
+.guideCloudBtn{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:230px!important;
+  min-height:46px!important;
+  margin:10px 0 4px!important;
+  padding:10px 18px!important;
+  border:2px solid #d9b256!important;
+  border-radius:12px!important;
+  color:#fff!important;
+  background:linear-gradient(180deg,#5c4315,#15110a)!important;
+  font-weight:900!important;
+  text-decoration:none!important;
+  text-align:center!important;
+}
+.closeModalBtn{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:120px!important;
+  min-height:42px!important;
+  margin-top:18px!important;
+  border:1px solid #caa24e!important;
+  padding:10px 18px!important;
+  border-radius:10px!important;
+  color:#fff!important;
+  background:rgba(255,217,90,.08)!important;
+  font-weight:900!important;
+  text-align:center!important;
+}
+@media(max-width:760px){
+  .guideModalBox{padding:22px 20px!important}
+  .guideModalBox h2{font-size:24px!important}
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="header"><a href="index.html"><img class="logo" src="FINAL_LOGO01.png" alt="Humateck"></a><div class="badge">운영 참고용 · 관리자 동선 미수집</div></div>
+  <section class="card"><h1>Humateck 운영 참고 관리자</h1><p>고객 페이지 방문 흐름만 간단히 확인하는 내부용 화면입니다. 이메일, 유튜브 URL, 번역문, OAuth 정보, 결제정보는 수집하지 않습니다.</p><div class="notice">이 페이지는 고객 화면에 링크하지 마십시오. 관리자 페이지 방문 기록은 통계에 포함하지 않습니다.</div></section>
+  <section class="card" id="queryBox">
+    <h2>운영 통계 조회</h2>
+    <div class="row admin-query-row">
+      <select id="daysSelect">
+        <option value="7">최근 7일</option>
+        <option value="14">최근 14일</option>
+        <option value="30">최근 30일</option>
+      </select>
+      <button id="loadBtn" type="button">조회하기</button>
+    </div>
+    <p class="small">관리자 페이지 방문 기록은 통계에 포함하지 않습니다.</p>
+  </section>
+
+  <section id="dashboard" class="hidden">
+    <div class="grid4"><div class="metric"><div class="label">오늘 방문자</div><div id="todayVisitors" class="value">0</div></div><div class="metric"><div class="label">오늘 페이지뷰</div><div id="todayViews" class="value">0</div></div><div class="metric"><div class="label">기간 방문자</div><div id="periodVisitors" class="value">0</div></div><div class="metric"><div class="label">기간 페이지뷰</div><div id="periodViews" class="value">0</div></div></div>
+    <div class="grid2" style="margin-top:18px"><section class="card"><h2>많이 본 페이지</h2><table><thead><tr><th>페이지</th><th>횟수</th></tr></thead><tbody id="topPages"></tbody></table></section><section class="card"><h2>유입 경로</h2><table><thead><tr><th>경로</th><th>횟수</th></tr></thead><tbody id="referrers"></tbody></table></section><section class="card"><h2>언어판</h2><table><thead><tr><th>구분</th><th>횟수</th></tr></thead><tbody id="languages"></tbody></table></section><section class="card"><h2>기기 / 브라우저</h2><table><thead><tr><th>구분</th><th>횟수</th></tr></thead><tbody id="devices"></tbody></table><br><table><thead><tr><th>브라우저</th><th>횟수</th></tr></thead><tbody id="browsers"></tbody></table></section></div>
+    <section class="card"><h2>최근 방문 흐름</h2><table><thead><tr><th>시간</th><th>페이지</th><th>언어</th><th>유입</th><th>기기</th><th>브라우저</th></tr></thead><tbody id="recent"></tbody></table></section>
+  </section>
+</div>
+<script src="humateck-admin.js"></script>
+</body>
+</html>
