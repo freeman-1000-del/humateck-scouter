@@ -2,11 +2,19 @@
 import { createClient } from '@supabase/supabase-js';
 
 const YT_KEY = process.env.YOUTUBE_API_KEY;
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+let SUPABASE_URL = (process.env.SUPABASE_URL || "").trim().replace(/\/+$/, "").replace(/\/rest\/v1$/i, "");
+const SUPABASE_SERVICE_KEY =
+  process.env.SUPABASE_SERVICE_KEY ||
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  "";
 
 if (!YT_KEY || !SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-  console.error("[중단] 환경변수(YOUTUBE_API_KEY / SUPABASE_URL / SUPABASE_SERVICE_KEY)가 없습니다.");
+  console.error("[중단] 환경변수가 비어 있습니다.", {
+    YOUTUBE_API_KEY: Boolean(YT_KEY),
+    SUPABASE_URL: Boolean(SUPABASE_URL),
+    SUPABASE_SERVICE_KEY: Boolean(process.env.SUPABASE_SERVICE_KEY),
+    SUPABASE_SERVICE_ROLE_KEY: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
+  });
   process.exit(1);
 }
 

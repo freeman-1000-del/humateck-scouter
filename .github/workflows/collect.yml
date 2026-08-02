@@ -21,9 +21,22 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Check secrets (names only)
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          echo "YOUTUBE_API_KEY set: ${{ secrets.YOUTUBE_API_KEY != '' }}"
+          echo "SUPABASE_URL set: ${{ secrets.SUPABASE_URL != '' }}"
+          echo "SUPABASE_SERVICE_KEY set: ${{ secrets.SUPABASE_SERVICE_KEY != '' }}"
+          echo "SUPABASE_SERVICE_ROLE_KEY set: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY != '' }}"
+
       - name: Run global collector
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: node fetch-global.mjs
