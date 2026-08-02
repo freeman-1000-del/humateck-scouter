@@ -88,7 +88,11 @@ async function main(){
     .insert({ kind: 'popular', note: 'daily auto' })
     .select()
     .single();
-  if (snapErr) { console.error("snapshot 생성 실패:", snapErr.message); process.exit(1); }
+  if (snapErr) {
+    console.error("snapshot 생성 실패:", snapErr.message, snapErr.code || "", snapErr.details || "");
+    console.error("힌트: SUPABASE_URL/Secret key 프로젝트가 contentscouter(ajvtyotblrtexcxuazqm)와 같은지 확인하세요.");
+    process.exit(1);
+  }
   const snapshotId = snap.id;
   console.log(`수집 회차 ID: ${snapshotId}`);
 
